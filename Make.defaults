@@ -9,6 +9,8 @@ sbindir	?= $(prefix)/sbin
 localedir ?= $(datadir)/locale/
 PCDIR	?= $(libdir)/pkgconfig
 DESTDIR	?=
+WORKSPACE := $(shell pwd)
+LIBEFIVARDIR := $(WORKSPACE)/libefivar
 ifneq ($(origin EXTRALIBDIRS),undefined)
 override EXTRALIBDIR := $(foreach dir,$(EXTRALIBDIRS),-L$(dir))
 endif
@@ -50,6 +52,7 @@ clang_ccldflags =
 gcc_ccldflags = -fno-merge-constants \
 	-Wl,--fatal-warnings,--no-allow-shlib-undefined \
 	-Wl,-O2 -Wl,--no-undefined-version
+override LDFLAGS += -Wl,-rpath,./ -L$(LIBEFIVARDIR)
 ccldflags = $(cflags) $(CCLDFLAGS) $(LDFLAGS) \
 	$(if $(findstring clang,$(CCLD)),$(clang_ccldflags),) \
 	$(if $(findstring gcc,$(CCLD)),$(gcc_ccldflags),) \

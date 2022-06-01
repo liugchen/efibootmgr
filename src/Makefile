@@ -5,7 +5,7 @@ include $(TOPDIR)/Make.version
 include $(TOPDIR)/Make.rules
 include $(TOPDIR)/Make.defaults
 
-SUBDIR_CFLAGS = -I$(SRCDIR)/include
+SUBDIR_CFLAGS = -I$(SRCDIR)/include  -I$(SRCDIR)/include/efivar
 
 BINTARGETS=efibootmgr efibootdump
 TARGETS=$(BINTARGETS) efibootmgr.8 efibootdump.8
