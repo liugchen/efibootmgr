@@ -125,14 +125,14 @@ if [ "$backcmd" -ne "0" ] ; then
 else
   echo $DIR/$1 $cmd
   $DIR/$1 $cmd
-  if [ $? -le 0 ]; then
-    echo -e "\033[41;5m ERROR: Failed to generate file. \033[0m"
-    exit 1
+  #if [ $? -le 0 ]; then
+    #echo -e "\033[41;5m ERROR: Failed to generate file. \033[0m"
+    #exit 1
     # Play noise for alarming ...
     #cat /dev/urandom >/dev/audio
-  else
-    echo -e "\033[42;37m  File completed OK!\033[0m"
-  fi
+  #else
+    #echo -e "\033[42;37m  File completed OK!\033[0m"
+  #fi
 #  rm $DIR/rom.bin
 fi
 
@@ -145,7 +145,8 @@ if [[ $cmd =~ "show" ]] ; then
   echo show
   exit 0
 fi
-
-$DIR/flashrom -p $plat -l $DIR/Layout -N -i NVRAM -w rom.bin --flash-contents rom.bin
+mv rom.bin generate_mfr.bin
+$DIR/flashrom -p $plat -l $DIR/Layout -i NVRAM -r rom.bin
+$DIR/flashrom -p $plat -l $DIR/Layout -N -i NVRAM -w generate_mfr.bin --flash-contents rom.bin
 
 exit 0;
